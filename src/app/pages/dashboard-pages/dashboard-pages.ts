@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-pages',
-  imports: [],
+  standalone: true,  
+  imports: [RouterModule],  
   templateUrl: './dashboard-pages.html',
   styleUrl: './dashboard-pages.css',
 })
