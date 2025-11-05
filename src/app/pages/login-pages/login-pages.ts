@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-pages',
-  imports: [],
+  standalone: true,  
+  imports: [RouterModule],  
   templateUrl: './login-pages.html',
-  styleUrl: './login-pages.css',
+  styleUrls: ['./login-pages.css']
 })
 export class LoginPages {
-
 }
