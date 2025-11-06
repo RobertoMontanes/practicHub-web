@@ -1,1 +1,80 @@
-<p>empresas-pages works!</p>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PracticHub - Gestión de Prácticas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="160" height="160" />
+        </div>
+        <div>
+          <div class="app-title">PracticHub</div>
+          <div class="app-subtitle">Gestión de Prácticas</div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="menu-item" routerLink="/dashboard">
+          <h6>Dashboard</h6>
+          <p>Vista general del sistema</p>
+        </div>
+        <div class="menu-item active" routerLink="/empresas">
+          <h6>Empresas</h6>
+          <p>Gestión de empresas colaboradoras</p>
+        </div>
+        <div class="menu-item" routerLink="/profesores">
+          <h6>Profesores</h6>
+          <p>Gestión de profesores supervisores</p>
+        </div>
+        <div class="menu-item" routerLink="/alumnos">
+          <h6>Alumnos</h6>
+          <p>Gestión de estudiantes</p>
+        </div>
+        <div class="menu-item" routerLink="/partes-diarios">
+          <h6>Partes Diarios</h6>
+          <p>Reportes diarios de actividades</p>
+        </div>
+        <div class="menu-item" routerLink="/seguimiento-historico">
+          <h6>Seguimiento Histórico</h6>
+          <p>Análisis histórico de empresas</p>
+        </div>
+        <div class="menu-item" routerLink="/valoraciones">
+          <h6>Valoraciones</h6>
+          <p>Sistema de evaluaciones</p>
+        </div>
+        <div class="menu-item" routerLink="/informes">
+          <h6>Informes</h6>
+          <p>Generación de reportes PDF/Excel</p>
+        </div>
+        <div class="menu-item" routerLink="/firma-digital">
+          <h6>Firma Digital</h6>
+          <p>Validación digital de documentos</p>
+        </div>
+        
+        <button type="submit" class="login-btn mt-3" routerLink="/login">Cerrar Sesión</button>
+
+
+      </div>
+
+      
+    </div>
+
+      <div class="flex-grow-1 p-4">
+        <h2>Texto de prueba</h2>
+        <div class="footer">
+          © 2025 PracticHub<br />
+          Todos los derechos reservados.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
