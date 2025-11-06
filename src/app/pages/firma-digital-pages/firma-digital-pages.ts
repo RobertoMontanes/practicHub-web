@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-firma-digital-pages',
-  imports: [],
+  standalone: true,  
+  imports: [RouterModule], 
   templateUrl: './firma-digital-pages.html',
   styleUrl: './firma-digital-pages.css',
 })
