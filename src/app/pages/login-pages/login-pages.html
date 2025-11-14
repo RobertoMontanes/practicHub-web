@@ -28,22 +28,21 @@
                 <form>
                     <div class="form-group">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" placeholder="tu@email.com">
+                        <input type="email" class="form-control" placeholder="tu@email.com" formControlName="emailFormControl">
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control">
+                        <input type="password" class="form-control" placeholder="******" formControlName="passwordFormControl">
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label">Tipo de usuario</label>
-                        <div class="user-type-container">
-                            <div class="form-control d-flex justify-content-between align-items-center">
-                                <span class="user-type-label">Alumno</span>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <legend class="form-label">Tipo de usuario</legend>
+                        <select class="form-select" name="user_type" aria-label="Seleccionar tipo de usuario">
+                            <option value="alumno" selected>Alumno</option>
+                            <option value="tutor">Tutor</option>
+                            <option value="empresa">Empresa</option>
+                        </select>
                     
                     <button type="submit" class="login-btn mt-3" routerLink="/dashboard">Iniciar Sesión</button>
                 </form>
