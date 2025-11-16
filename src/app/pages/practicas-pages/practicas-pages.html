@@ -1,79 +1,216 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PracticHub - Gestión de Prácticas</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../styles.css">
-
-</head>
-<body>
-  <div class="d-flex">
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <div class="logo">
-          <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="160" height="160" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PracticHub - Gestión de Prácticas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../styles.css" />
+  </head>
+  <body>
+    <div class="d-flex">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="160" height="160" />
+          </div>
+          <div>
+            <div class="app-title">PracticHub</div>
+            <div class="app-subtitle">Gestión de Prácticas</div>
+          </div>
         </div>
-        <div>
-          <div class="app-title">PracticHub</div>
-          <div class="app-subtitle">Gestión de Prácticas</div>
+
+        <div class="menu">
+          <div class="menu-item" routerLink="/dashboard">
+            <h6>Dashboard</h6>
+            <p>Vista general del sistema</p>
+          </div>
+          <div class="menu-item" routerLink="/empresas">
+            <h6>Empresas</h6>
+            <p>Gestión de empresas colaboradoras</p>
+          </div>
+          <div class="menu-item" routerLink="/profesores">
+            <h6>Profesores</h6>
+            <p>Gestión de profesores supervisores</p>
+          </div>
+          <div class="menu-item" routerLink="/alumnos">
+            <h6>Alumnos</h6>
+            <p>Gestión de estudiantes</p>
+          </div>
+
+          <div class="menu-item active" routerLink="/seguimiento-historico">
+            <h6>Seguimiento Histórico</h6>
+            <p>Análisis histórico de empresas</p>
+          </div>
+          <div class="menu-item" routerLink="/valoraciones">
+            <h6>Valoraciones</h6>
+            <p>Sistema de evaluaciones</p>
+          </div>
+          <div class="menu-item" routerLink="/informes">
+            <h6>Informes</h6>
+            <p>Generación de reportes PDF/Excel</p>
+          </div>
+          
+
+          <button type="submit" class="login-btn mt-3" routerLink="/login">Cerrar Sesión</button>
         </div>
       </div>
 
-      <div class="menu">
-        <div class="menu-item" routerLink="/dashboard">
-          <h6>Dashboard</h6>
-          <p>Vista general del sistema</p>
-        </div>
-        <div class="menu-item" routerLink="/empresas">
-          <h6>Empresas</h6>
-          <p>Gestión de empresas colaboradoras</p>
-        </div>
-        <div class="menu-item" routerLink="/profesores">
-          <h6>Profesores</h6>
-          <p>Gestión de profesores supervisores</p>
-        </div>
-        <div class="menu-item" routerLink="/alumnos">
-          <h6>Alumnos</h6>
-          <p>Gestión de estudiantes</p>
-        </div>
-        <div class="menu-item" routerLink="/partes-diarios">
-          <h6>Partes Diarios</h6>
-          <p>Reportes diarios de actividades</p>
-        </div>
-        <div class="menu-item active" routerLink="/seguimiento-historico">
-          <h6>Seguimiento Histórico</h6>
-          <p>Análisis histórico de empresas</p>
-        </div>
-        <div class="menu-item" routerLink="/valoraciones">
-          <h6>Valoraciones</h6>
-          <p>Sistema de evaluaciones</p>
-        </div>
-        <div class="menu-item" routerLink="/informes">
-          <h6>Informes</h6>
-          <p>Generación de reportes PDF/Excel</p>
-        </div>
-        <div class="menu-item" routerLink="/firma-digital">
-          <h6>Firma Digital</h6>
-          <p>Validación digital de documentos</p>
-        </div>
-        
-        <button type="submit" class="login-btn mt-3" routerLink="/login">Cerrar Sesión</button>
+      <div class="flex-grow-1 p-4">
+        <main class="practicas">
+          <!-- CONTENEDOR PRINCIPAL -->
+          <div class="container-fluid bg-light py-4">
+            <!-- TITULO + SUBTITULO -->
+            <div class="mb-4">
+              <h2 class="fw-normal text-dark">Alumnos</h2>
+              <p class="text-secondary">Gestión de estudiantes</p>
+            </div>
 
+            <!-- CUADROS DE ESTADÍSTICAS -->
+            <div class="row g-3">
+              <!-- Total Alumnos -->
+              <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body d-flex gap-3 align-items-center">
+                    <div
+                      class="icon bg-primary bg-opacity-10 rounded-circle p-3 border border-primary"
+                    ></div>
+                    <div>
+                      <p class="text-secondary mb-0">Total Alumnos</p>
+                      <h6 class="mb-0">---</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              <!-- En prácticas -->
+              <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body d-flex gap-3 align-items-center">
+                    <div
+                      class="icon bg-success bg-opacity-10 rounded-circle p-3 border border-success"
+                    ></div>
+                    <div>
+                      <p class="text-secondary mb-0">En Prácticas</p>
+                      <h6 class="mb-0">---</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Por asignar -->
+              <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body d-flex gap-3 align-items-center">
+                    <div
+                      class="icon bg-danger bg-opacity-10 rounded-circle p-3 border border-danger"
+                    ></div>
+                    <div>
+                      <p class="text-secondary mb-0">Por Asignar</p>
+                      <h6 class="mb-0">---</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Finalizadas -->
+              <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body d-flex gap-3 align-items-center">
+                    <div
+                      class="icon bg-purple bg-opacity-10 rounded-circle p-3 border border-purple"
+                    ></div>
+                    <div>
+                      <p class="text-secondary mb-0">Finalizadas</p>
+                      <h6 class="mb-0">---</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LISTA DE ALUMNOS -->
+            <div class="card mt-4 shadow-sm">
+              <div class="card-body">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="mb-0">Lista de Alumnos</h5>
+                  <button class="btn btn-dark">Nuevo Alumno</button>
+                </div>
+
+                <!-- Buscador -->
+                <div class="input-group mb-3">
+                  <span class="input-group-text bg-light border-0">
+                    <i class="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control bg-light border-0"
+                    placeholder="Buscar por nombre, DNI o empresa asignada..."
+                  />
+                  <button class="btn btn-outline-secondary">Filtros</button>
+                </div>
+
+                <!-- Tabla -->
+                <div class="table-responsive">
+                  <table class="table align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Alumno</th>
+                        <th>DNI</th>
+                        <th>Ciclo Formativo</th>
+                        <th>Empresa Asignada</th>
+                        <th>Tutor</th>
+                        <th>Periodo</th>
+                        <th>Estado</th>
+                        <th class="text-end">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="8" class="text-center text-secondary py-4">
+                          No hay alumnos registrados o seleccione filtros para ver resultados
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- CICLOS FORMATIVOS -->
+            <div class="card mt-4 shadow-sm">
+              <div class="card-body">
+                <h5 class="mb-3">Ciclos Formativos</h5>
+
+                <div class="list-group">
+                  <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span>DAW - Desarrollo Web</span>
+                    <span class="badge bg-secondary">0</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span>DAM - Multiplataforma</span>
+                    <span class="badge bg-secondary">0</span>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center py-2">
+                    <span>ASIR - Redes</span>
+                    <span class="badge bg-secondary">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <div class="footer">
+          © 2025 PracticHub<br />
+          Todos los derechos reservados.
+        </div>
       </div>
-
-      
     </div>
-
-    <div class="flex-grow-1 p-4">
-      <h2>Texto de prueba</h2>
-      <div class="footer">
-        © 2025 PracticHub<br />
-        Todos los derechos reservados.
-      </div>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
