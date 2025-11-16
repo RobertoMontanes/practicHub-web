@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PracticHub - Gestión integral de alumnos en prácticas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-        <div class="login-container">
-            <div class="text-center mb-4">
-                <div class="logo-container">
-                    <img class="logo" src="/assets/logo_practichub.png" alt="PracticHub Logo">
-                </div>
-                <h1 class="app-title">PracticHub</h1>
-                <p class="app-subtitle">Gestión integral de alumnos en prácticas</p>
-            </div>
-            
-            <div class="tab-container mb-3">
-                <div class="d-flex">
-                    <button class="tab-button active" id="login-tab">Iniciar Sesión</button>
-                    <button class="tab-button" id="register-tab" routerLink="/registro">Registro</button>
-                </div>
-            </div>
-            
-            <div class="tab-content">
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" placeholder="tu@email.com" formControlName="emailFormControl">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" placeholder="******" formControlName="passwordFormControl">
-                    </div>
-                    
-                    
-                    <legend class="form-label">Tipo de usuario</legend>
-                        <select class="form-select" name="user_type" aria-label="Seleccionar tipo de usuario">
-                            <option value="alumno" selected>Alumno</option>
-                            <option value="tutor">Tutor</option>
-                            <option value="empresa">Empresa</option>
-                        </select>
-                    
-                    <button type="submit" class="login-btn mt-3" routerLink="/dashboard">Iniciar Sesión</button>
-                </form>
-            </div>
+      <div class="login-container">
+        <div class="text-center mb-4">
+          <div class="logo-container">
+            <img class="logo" src="/assets/logo_practichub.png" alt="PracticHub Logo" />
+          </div>
+          <h1 class="app-title">PracticHub</h1>
+          <p class="app-subtitle">Gestión integral de alumnos en prácticas</p>
         </div>
+
+        <div class="tab-container mb-3">
+          <div class="d-flex">
+            <button class="tab-button active" id="login-tab">Iniciar Sesión</button>
+            <button class="tab-button" id="register-tab" routerLink="/registro">Registro</button>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <form>
+            <div class="form-group">
+              <label class="form-label">Correo electrónico</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="tu@email.com"
+                formControlName="emailFormControl"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Contraseña</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="******"
+                formControlName="passwordFormControl"
+              />
+            </div>
+
+            <legend class="form-label">Tipo de usuario</legend>
+            <select class="form-select" name="user_type" aria-label="Seleccionar tipo de usuario">
+              <option value="alumno" selected>Alumno</option>
+              <option value="tutor">Tutor</option>
+              <option value="empresa">Empresa</option>
+            </select>
+
+            <button type="submit" class="login-btn mt-3" routerLink="/dashboard">
+              Iniciar Sesión
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
