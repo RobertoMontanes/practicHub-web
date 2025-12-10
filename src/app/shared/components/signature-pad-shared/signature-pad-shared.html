@@ -1,1 +1,20 @@
-<p>signature-pad-shared works!</p>
+<div class="signature-pad">
+	<div class="signature-toolbar">
+		<span class="label">Firma digital</span>
+		<div class="actions">
+			<button type="button" (click)="clear()">Limpiar</button>
+			<button type="button" class="primary" (click)="save()">Guardar</button>
+		</div>
+	</div>
+
+	<canvas
+		#canvas
+		class="signature-canvas"
+		(pointerdown)="pointerDown($event)"
+		(pointermove)="pointerMove($event)"
+		(pointerup)="pointerUp()"
+		(pointerleave)="pointerUp()"
+	></canvas>
+
+	<p class="hint">Firma dentro del recuadro con el ratón o un lápiz digital.</p>
+</div>

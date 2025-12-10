@@ -1,1 +1,14 @@
-<p>button-shared works!</p>
+<button
+	type="button"
+	class="btn-base"
+	[ngClass]="hostClasses"
+	[disabled]="disabled"
+	(click)="handleClick($event)"
+>
+	@if (icon) {
+		<span class="icon-slot" [ngClass]="icon" aria-hidden="true"></span>
+	}
+	@if (label) {
+		<span>{{ label }}</span>
+	}
+</button>

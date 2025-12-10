@@ -1,1 +1,14 @@
-<p>rating-stars-shared works!</p>
+<div class="rating" [class.readonly]="readonly" role="slider" [attr.aria-valuenow]="value" aria-valuemin="0" [attr.aria-valuemax]="max">
+	@for (star of stars; track star) {
+		<button
+			type="button"
+			class="star"
+			[class.active]="star <= value"
+			(click)="setValue(star)"
+			[attr.aria-label]="'Puntuación ' + star"
+		></button>
+	}
+	@if (showLabel) {
+		<span class="rating-label">{{ value }} / {{ max }}</span>
+	}
+</div>

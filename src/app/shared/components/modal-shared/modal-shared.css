@@ -1,0 +1,73 @@
+.modal-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	z-index: 1050;
+}
+
+.modal-dialog {
+	width: min(520px, 100%);
+	background: #fff;
+	border-radius: 1.25rem;
+	box-shadow: 0 25px 65px rgba(15, 23, 42, 0.25);
+	overflow: hidden;
+	animation: scaleIn 0.2s ease;
+}
+
+.modal-header,
+.modal-footer {
+	padding: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.modal-body {
+	padding: 0 1.5rem 1.5rem;
+	max-height: 70vh;
+	overflow-y: auto;
+}
+
+.modal-title {
+	margin: 0;
+	font-size: 1.25rem;
+	color: #0f172a;
+}
+
+.modal-description {
+	margin: 0.35rem 0 0;
+	color: #475569;
+}
+
+.close-btn {
+	background: #f1f5f9;
+	border: none;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 999px;
+	font-size: 1.25rem;
+	cursor: pointer;
+	color: #0f172a;
+}
+
+.modal-footer {
+	border-top: 1px solid #e2e8f0;
+	justify-content: flex-end;
+}
+
+@keyframes scaleIn {
+	from {
+		transform: translateY(10px) scale(0.95);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0) scale(1);
+		opacity: 1;
+	}
+}

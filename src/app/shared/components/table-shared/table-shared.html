@@ -1,1 +1,40 @@
-<p>table-shared works!</p>
+<div class="table-wrapper" [class.loading]="loading">
+	<div class="table-scroll">
+		<table>
+			<thead>
+				<tr>
+					@for (column of columns; track $index) {
+						<th [style.width]="column.width" [class.align-end]="column.align === 'end'" [class.align-center]="column.align === 'center'">
+							{{ column.label }}
+						</th>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				@if (loading) {
+					<tr>
+						<td [attr.colspan]="columns.length">
+							<div class="skeleton-row"></div>
+						</td>
+					</tr>
+				}
+				@if (!loading && rows.length === 0) {
+					<tr>
+						<td [attr.colspan]="columns.length" class="empty">
+							{{ emptyState }}
+						</td>
+					</tr>
+				}
+				@for (row of rows; track $index) {
+					<tr (click)="onRowClick(row)">
+						@for (column of columns; track $index) {
+							<td [class.align-end]="column.align === 'end'" [class.align-center]="column.align === 'center'">
+								{{ row[column.key] ?? '—' }}
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

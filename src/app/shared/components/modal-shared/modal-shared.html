@@ -1,1 +1,36 @@
-<p>modal-shared works!</p>
+@if (open) {
+	<div class="modal-backdrop" (click)="onBackdropClick()">
+		<div class="modal-dialog" (click)="$event.stopPropagation()">
+			<div class="modal-header">
+				<div>
+					<h4 class="modal-title">{{ title }}</h4>
+					@if (description) {
+						<p class="modal-description">{{ description }}</p>
+					}
+				</div>
+				<button type="button" class="close-btn" (click)="onSecondary()" aria-label="Cerrar">
+					×
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<ng-content></ng-content>
+			</div>
+
+			<div class="modal-footer">
+				@if (!hideSecondary) {
+					<app-button-shared
+						variant="ghost"
+						label="{{ secondaryLabel }}"
+						(pressed)="onSecondary()"
+					></app-button-shared>
+				}
+				<app-button-shared
+					variant="primary"
+					label="{{ primaryLabel }}"
+					(pressed)="onPrimary()"
+				></app-button-shared>
+			</div>
+		</div>
+	</div>
+}

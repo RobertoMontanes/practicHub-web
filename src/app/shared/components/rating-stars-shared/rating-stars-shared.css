@@ -1,0 +1,38 @@
+.rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.rating.readonly .star {
+	cursor: default;
+}
+
+.star {
+	width: 28px;
+	height: 28px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	padding: 0;
+	position: relative;
+}
+
+.star::before {
+	content: '\2605';
+	font-size: 1.4rem;
+	color: #cbd5f5;
+	transition: color 0.15s ease;
+}
+
+.star.active::before,
+.star:not(.active):hover::before,
+.star:not(.active):focus-visible::before {
+	color: #fbbf24;
+}
+
+.rating-label {
+	font-size: 0.85rem;
+	color: #475569;
+	margin-left: 0.5rem;
+}
