@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AlumnoService } from '../../services/alumno-service';
 
 @Component({
   selector: 'app-alumnos-pages',
@@ -8,6 +9,15 @@ import { RouterModule } from '@angular/router';
   templateUrl: './alumnos-pages.html',
   styleUrl: './alumnos-pages.css',
 })
-export class AlumnosPages {
+export class AlumnosPages implements OnInit {
+  
+  alumnos: any = null;
 
+  constructor (private service: AlumnoService) {}
+
+  ngOnInit(): void {
+    this.service.getAlumnos().subscribe(r => {
+      this.alumnos = r
+    })
+  }
 }

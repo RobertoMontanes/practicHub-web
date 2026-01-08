@@ -1,67 +1,56 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PracticHub - Gestión integral de alumnos en prácticas</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-      <div class="login-container">
-        <div class="text-center mb-4">
-          <div class="logo-container">
-            <img class="logo" src="/assets/logo_practichub.png" alt="PracticHub Logo" />
-          </div>
-          <h1 class="app-title">PracticHub</h1>
-          <p class="app-subtitle">Gestión integral de alumnos en prácticas</p>
-        </div>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+  <div class="login-container">
+    <div class="text-center mb-4">
+      <div class="logo-container">
+        <img class="logo" src="/assets/logo_practichub.png" alt="PracticHub Logo" />
+      </div>
+      <h1 class="app-title">PracticHub</h1>
+      <p class="app-subtitle">Gestión integral de alumnos en prácticas</p>
+    </div>
 
-        <div class="tab-container mb-3">
-          <div class="d-flex">
-            <button class="tab-button active" id="login-tab">Iniciar Sesión</button>
-            <button class="tab-button" id="register-tab" routerLink="/registro">Registro</button>
-          </div>
-        </div>
-
-        <div class="tab-content">
-          <form>
-            <div class="form-group">
-              <label class="form-label">Correo electrónico</label>
-              <input
-                type="email"
-                class="form-control"
-                placeholder="tu@email.com"
-                formControlName="emailFormControl"
-              />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Contraseña</label>
-              <input
-                type="password"
-                class="form-control"
-                placeholder="******"
-                formControlName="passwordFormControl"
-              />
-            </div>
-
-            <legend class="form-label">Tipo de usuario</legend>
-            <select class="form-select" name="user_type" aria-label="Seleccionar tipo de usuario">
-              <option value="alumno" selected>Alumno</option>
-              <option value="tutor">Tutor</option>
-              <option value="empresa">Empresa</option>
-            </select>
-
-            <button type="submit" class="login-btn mt-3" routerLink="/dashboard">
-              Iniciar Sesión
-            </button>
-          </form>
-        </div>
+    <div class="tab-container mb-3">
+      <div class="d-flex">
+        <button class="tab-button active" id="login-tab">Iniciar Sesión</button>
+        <button class="tab-button" id="register-tab" routerLink="/registro">Registro</button>
       </div>
     </div>
-  </body>
-</html>
+
+    <div class="tab-content">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="tu@email.com"
+            formControlName="email"
+          />
+          <div class="text-danger small" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+            Introduce un email válido.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="******"
+            formControlName="password"
+          />
+          <div class="text-danger small" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+            La contraseña es obligatoria (mínimo 6 caracteres).
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn mt-3 w-100" [disabled]="submitting">
+          {{ submitting ? 'Accediendo...' : 'Iniciar Sesión' }}
+        </button>
+
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
