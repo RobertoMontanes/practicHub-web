@@ -1,219 +1,125 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PracticHub - Gestión de Prácticas</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../../../styles.css" />
-  </head>
-  <body>
-    <div class="d-flex">
-      <div class="sidebar">
-        <div class="sidebar-header">
-          <div class="logo">
-            <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="160" height="160" />
-          </div>
-          <div>
-            <div class="app-title">PracticHub</div>
-            <div class="app-subtitle">Gestión de Prácticas</div>
-          </div>
-        </div>
-
-        <div class="menu">
-          <div class="menu-item" routerLink="/dashboard">
-            <h6>Dashboard</h6>
-            <p>Vista general del sistema</p>
-          </div>
-          <div class="menu-item" routerLink="/empresas">
-            <h6>Empresas</h6>
-            <p>Gestión de empresas colaboradoras</p>
-          </div>
-          <div class="menu-item active" routerLink="/profesores">
-            <h6>Profesores</h6>
-            <p>Gestión de profesores supervisores</p>
-          </div>
-          <div class="menu-item" routerLink="/alumnos">
-            <h6>Alumnos</h6>
-            <p>Gestión de estudiantes</p>
-          </div>
-
-          <div class="menu-item" routerLink="/seguimiento-historico">
-            <h6>Seguimiento Histórico</h6>
-            <p>Análisis histórico de empresas</p>
-          </div>
-          <div class="menu-item" routerLink="/valoraciones">
-            <h6>Valoraciones</h6>
-            <p>Sistema de evaluaciones</p>
-          </div>
-          <div class="menu-item" routerLink="/informes">
-            <h6>Informes</h6>
-            <p>Generación de reportes PDF/Excel</p>
-          </div>
-          
-
-          <button type="submit" class="login-btn mt-3" routerLink="/login">Cerrar Sesión</button>
-        </div>
+<app-admin-shell>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h2 class="fw-bold text-dark">Profesores</h2>
+        <p class="text-muted">Gestión de profesores supervisores</p>
       </div>
+      <button class="btn btn-dark" (click)="openCreate()">Nuevo Profesor</button>
+    </div>
 
-      <div class="flex-grow-1 p-4">
-        <main class="profesores">
-          <div class="container py-4">
-            <div class="mb-4">
-              <h2 class="fw-normal text-dark">Profesores</h2>
-              <p class="text-muted">Gestión de profesores supervisores</p>
-            </div>
-          </div>
-
-          <div class="row g-3 mb-4">
-            <!-- Total Profesores -->
-            <div class="col-md-3">
-              <div class="card shadow-sm border-0">
-                <div class="card-body d-flex align-items-center gap-3">
-                  <div class="text-primary fs-3">
-                    <i class="bi bi-people"></i>
-                  </div>
-                  <div>
-                    <small class="text-muted d-block">Total Profesores</small>
-                    <span class="fw-semibold">---</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Activos -->
-            <div class="col-md-3">
-              <div class="card shadow-sm border-0">
-                <div class="card-body d-flex align-items-center gap-3">
-                  <div class="text-success fs-3">
-                    <i class="bi bi-check-circle"></i>
-                  </div>
-                  <div>
-                    <small class="text-muted d-block">Activos</small>
-                    <span class="fw-semibold">---</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Supervisiones -->
-            <div class="col-md-3">
-              <div class="card shadow-sm border-0">
-                <div class="card-body d-flex align-items-center gap-3">
-                  <div class="text-danger fs-3">
-                    <i class="bi bi-clipboard-data"></i>
-                  </div>
-                  <div>
-                    <small class="text-muted d-block">Supervisiones</small>
-                    <span class="fw-semibold">---</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Valoraciones -->
-            <div class="col-md-3">
-              <div class="card shadow-sm border-0">
-                <div class="card-body d-flex align-items-center gap-3">
-                  <div class="text-purple fs-3">
-                    <i class="bi bi-star"></i>
-                  </div>
-                  <div>
-                    <small class="text-muted d-block">Valoraciones</small>
-                    <span class="fw-semibold">---</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Buscador y Filtros -->
-          <div class="d-flex gap-2 mb-3">
-            <input
-              type="text"
-              class="form-control bg-light"
-              placeholder="Buscar profesor por nombre, DNI o especialidad..."
-            />
-            <button class="btn btn-outline-secondary"><i class="bi bi-funnel"></i> Filtros</button>
-          </div>
-          <!-- Tabla de Profesores -->
-          <div class="card shadow-sm border-0">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-              <h6 class="m-0">Listado de Profesores</h6>
-              <button class="btn btn-dark btn-sm">Nuevo Profesor</button>
-            </div>
-
-            <div class="table-responsive">
-              <table class="table table-borderless align-middle mb-0">
-                <thead class="border-bottom">
-                  <tr class="text-muted small">
-                    <th>Nombre</th>
-                    <th>DNI</th>
-                    <th>Email</th>
-                    <th>Departamento</th>
-                    <th>Alumnos Asignados</th>
-                    <th>Estado</th>
-                    <th class="text-end">Acciones</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td colspan="7" class="text-center text-secondary py-4">
-                      No hay profesores registrados o seleccione filtros para ver resultados.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- Departamentos -->
-          <div class="card shadow-sm border-0 mt-4">
-            <div class="card-body">
-              <h6 class="mb-4">Departamentos</h6>
-
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="d-flex justify-content-between">
-                    <span>Informática</span>
-                    <strong>---</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span>Administración</span>
-                    <strong>---</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span>Electricidad</span>
-                    <strong>---</strong>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="d-flex justify-content-between">
-                    <span>Sanidad</span>
-                    <strong>---</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span>Comercio</span>
-                    <strong>---</strong>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span>Otros</span>
-                    <strong>---</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <div class="footer">
-          © 2025 PracticHub<br />
-          Todos los derechos reservados.
+    <div class="card shadow-sm mb-3">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <small class="text-muted d-block">Total Profesores</small>
+          <span class="fw-semibold">{{ total }}</span>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary btn-sm" [disabled]="page <= 1 || loading" (click)="load(page - 1)">
+            Anterior
+          </button>
+          <span class="text-secondary small">Página {{ page }} / {{ lastPage }}</span>
+          <button class="btn btn-outline-secondary btn-sm" [disabled]="page >= lastPage || loading" (click)="load(page + 1)">
+            Siguiente
+          </button>
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h6 class="m-0">Listado de Profesores</h6>
+        <button class="btn btn-dark btn-sm" (click)="openCreate()">Nuevo Profesor</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-borderless align-middle mb-0">
+          <thead class="border-bottom">
+            <tr class="text-muted small">
+              <th>Nombre</th>
+              <th>DNI</th>
+              <th>Email</th>
+              <th>Departamento</th>
+              <th>Especialidad</th>
+              <th>Estado</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="!loading && profesores.length === 0">
+              <td colspan="7" class="text-center text-secondary py-4">
+                No hay profesores registrados.
+              </td>
+            </tr>
+            <tr *ngFor="let profesor of profesores">
+              <td>
+                <div class="fw-semibold">{{ profesor.user?.name || 'Usuario' }}</div>
+                <small class="text-secondary">ID usuario: {{ profesor.user_id }}</small>
+              </td>
+              <td>{{ profesor.dni }}</td>
+              <td>{{ profesor.user?.email }}</td>
+              <td>{{ profesor.departamento }}</td>
+              <td>{{ profesor.especialidad }}</td>
+              <td>
+                <span class="badge" [class.bg-success]="profesor.activo" [class.bg-secondary]="!profesor.activo">
+                  {{ profesor.activo ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(profesor)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="remove(profesor)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <app-modal-shared
+      [open]="modalOpen"
+      [title]="editingId ? 'Editar profesor' : 'Nuevo profesor'"
+      primaryLabel="Guardar"
+      secondaryLabel="Cancelar"
+      (primary)="submit()"
+      (secondary)="closeModal()"
+      (backdrop)="closeModal()"
+    >
+      <form [formGroup]="form" class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Usuario asociado</label>
+          <select class="form-select" formControlName="user_id">
+            <option [ngValue]="null">Selecciona un usuario</option>
+            <option *ngFor="let user of users" [ngValue]="user.id">{{ user.name }} ({{ user.email }})</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">DNI</label>
+          <input class="form-control" formControlName="dni" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Teléfono</label>
+          <input class="form-control" formControlName="telefono" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Departamento</label>
+          <input class="form-control" formControlName="departamento" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Especialidad</label>
+          <input class="form-control" formControlName="especialidad" />
+        </div>
+        <div class="col-12 form-check">
+          <input class="form-check-input" type="checkbox" id="profesorActivo" formControlName="activo" />
+          <label class="form-check-label" for="profesorActivo">Profesor activo</label>
+        </div>
+      </form>
+      <div class="text-danger small mt-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="text-secondary small" *ngIf="saving">Guardando cambios...</div>
+    </app-modal-shared>
+  </div>
+</app-admin-shell>

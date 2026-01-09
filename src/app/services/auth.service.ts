@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, finalize, map, of, tap } from 'rxjs';
 
 export interface AuthUser {
   id: number;
@@ -42,9 +42,17 @@ export class AuthService {
     );
   }
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
+  logout(): Observable<void> {
+    const request = this.token
+      ? this.http.post<void>(`${this.apiUrl}/logout`, {})
+      : of(void 0);
+
+    return request.pipe(
+      finalize(() => {
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.userKey);
+      })
+    );
   }
 
   get token(): string | null {

@@ -1,178 +1,103 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PracticHub - Gestión de Prácticas</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../../../styles.css" />
-  </head>
-  <body>
-    <div class="d-flex">
-      <div class="sidebar">
-        <div class="sidebar-header">
-          <div class="logo">
-            <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="160" height="160" />
-          </div>
-          <div>
-            <div class="app-title">PracticHub</div>
-            <div class="app-subtitle">Gestión de Prácticas</div>
-          </div>
-        </div>
+<app-admin-shell>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+      <div>
+        <h2 class="fw-bold">Panel de Control</h2>
+        <p class="text-muted">Gestión de Alumnos en Prácticas</p>
+      </div>
 
-        <div class="menu">
-          <div class="menu-item active" routerLink="/dashboard">
-            <h6>Dashboard</h6>
-            <p>Vista general del sistema</p>
-          </div>
-          <div class="menu-item" routerLink="/empresas">
-            <h6>Empresas</h6>
-            <p>Gestión de empresas colaboradoras</p>
-          </div>
-          <div class="menu-item" routerLink="/profesores">
-            <h6>Profesores</h6>
-            <p>Gestión de profesores supervisores</p>
-          </div>
-          <div class="menu-item" routerLink="/alumnos">
-            <h6>Alumnos</h6>
-            <p>Gestión de estudiantes</p>
-          </div>
+      <button class="btn btn-primary">Nuevo Registro</button>
+    </div>
 
-          <div class="menu-item" routerLink="/seguimiento-historico">
-            <h6>Seguimiento Histórico</h6>
-            <p>Análisis histórico de empresas</p>
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Empresas Activas</h5>
+            <p class="h3 fw-bold">47</p>
           </div>
-          <div class="menu-item" routerLink="/valoraciones">
-            <h6>Valoraciones</h6>
-            <p>Sistema de evaluaciones</p>
-          </div>
-          <div class="menu-item" routerLink="/informes">
-            <h6>Informes</h6>
-            <p>Generación de reportes PDF/Excel</p>
-          </div>
-          
-
-          <button type="submit" class="login-btn mt-3" routerLink="/login">Cerrar Sesión</button>
         </div>
       </div>
 
-      <div class="flex-grow-1 p-4">
-        <main class="dashboard">
-          <div class="container-fluid">
-            <!-- Encabezado -->
-            <div class="d-flex justify-content-between align-items-start mb-4">
-              <div>
-                <h2 class="fw-bold">Panel de Control</h2>
-                <p class="text-muted">Gestión de Alumnos en Prácticas</p>
-              </div>
-
-              <button class="btn btn-primary">Nuevo Registro</button>
-            </div>
-
-            <!-- Tarjetas de estadísticas -->
-            <div class="row g-3 mb-4">
-              <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body">
-                    <h5 class="card-title">Empresas Activas</h5>
-                    <p class="h3 fw-bold">47</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body">
-                    <h5 class="card-title">Alumnos en Prácticas</h5>
-                    <p class="h3 fw-bold">156</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body">
-                    <h5 class="card-title">Profesores</h5>
-                    <p class="h3 fw-bold">23</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body">
-                    <h5 class="card-title">Partes Diarios</h5>
-                    <p class="h3 fw-bold">1,234</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Actividad Reciente -->
-            <div class="card shadow-sm mb-4">
-              <div class="card-body">
-                <h4 class="fw-bold mb-1">Actividad Reciente</h4>
-                <p class="text-muted mb-3">Últimas acciones en el sistema</p>
-
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item px-0">
-                    <strong>Nueva empresa registrada:</strong> TechCorp S.L.
-                    <div class="text-muted small">Hace 2 horas</div>
-                  </li>
-
-                  <li class="list-group-item px-0">
-                    <strong>Parte diario completado:</strong> Ana García
-                    <div class="text-muted small">Hace 4 horas</div>
-                  </li>
-
-                  <li class="list-group-item px-0">
-                    <strong>Valoración recibida:</strong> Innovate Solutions
-                    <div class="text-muted small">Hace 6 horas</div>
-                  </li>
-
-                  <li class="list-group-item px-0">
-                    <strong>Informe mensual generado</strong>
-                    <div class="text-muted small">Hace 1 día</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Próximas acciones -->
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h4 class="fw-bold mb-1">Próximas Acciones</h4>
-                <p class="text-muted mb-3">Tareas pendientes y recordatorios</p>
-
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item px-0">
-                    <input type="checkbox" class="form-check-input me-2" />
-                    Revisar informes pendientes
-                  </li>
-
-                  <li class="list-group-item px-0">
-                    <input type="checkbox" class="form-check-input me-2" />
-                    Llamar a empresa Innovate Solutions
-                  </li>
-
-                  <li class="list-group-item px-0">
-                    <input type="checkbox" class="form-check-input me-2" />
-                    Validar partes diarios del curso DAM
-                  </li>
-                </ul>
-              </div>
-            </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Alumnos en Prácticas</h5>
+            <p class="h3 fw-bold">156</p>
           </div>
-        </main>
+        </div>
+      </div>
 
-        <div class="footer">
-          © 2025 PracticHub<br />
-          Todos los derechos reservados.
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Profesores</h5>
+            <p class="h3 fw-bold">23</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Partes Diarios</h5>
+            <p class="h3 fw-bold">1,234</p>
+          </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="fw-bold mb-1">Actividad Reciente</h4>
+        <p class="text-muted mb-3">Últimas acciones en el sistema</p>
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-0">
+            <strong>Nueva empresa registrada:</strong> TechCorp S.L.
+            <div class="text-muted small">Hace 2 horas</div>
+          </li>
+
+          <li class="list-group-item px-0">
+            <strong>Parte diario completado:</strong> Ana García
+            <div class="text-muted small">Hace 4 horas</div>
+          </li>
+
+          <li class="list-group-item px-0">
+            <strong>Valoración recibida:</strong> Innovate Solutions
+            <div class="text-muted small">Hace 6 horas</div>
+          </li>
+
+          <li class="list-group-item px-0">
+            <strong>Informe mensual generado</strong>
+            <div class="text-muted small">Hace 1 día</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="fw-bold mb-1">Próximas Acciones</h4>
+        <p class="text-muted mb-3">Tareas pendientes y recordatorios</p>
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-0">
+            <input type="checkbox" class="form-check-input me-2" />
+            Revisar informes pendientes
+          </li>
+
+          <li class="list-group-item px-0">
+            <input type="checkbox" class="form-check-input me-2" />
+            Llamar a empresa Innovate Solutions
+          </li>
+
+          <li class="list-group-item px-0">
+            <input type="checkbox" class="form-check-input me-2" />
+            Validar partes diarios del curso DAM
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</app-admin-shell>

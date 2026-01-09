@@ -1,0 +1,44 @@
+<div class="d-flex min-vh-100">
+  <aside class="sidebar d-flex flex-column">
+    <div class="sidebar-header">
+      <div class="logo">
+        <img src="/assets/logo_practichub.png" alt="Logo PracticHub" width="64" height="64" />
+      </div>
+      <div>
+        <div class="app-title">PracticHub</div>
+        <div class="app-subtitle">Gestión de Prácticas</div>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a
+        *ngFor="let link of links"
+        class="menu-item d-block text-decoration-none"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <h6>{{ link.label }}</h6>
+        <p>{{ link.description }}</p>
+      </a>
+
+      <button type="button" class="btn btn-dark w-100 mt-2" (click)="logout()">
+        Cerrar Sesión
+      </button>
+    </nav>
+
+    <div class="footer">
+      © 2025 PracticHub<br />
+      Todos los derechos reservados.
+    </div>
+  </aside>
+
+  <div class="flex-grow-1 d-flex flex-column bg-light">
+    <main class="flex-grow-1 p-4">
+      <ng-content></ng-content>
+    </main>
+    <div class="footer text-center">
+      © 2025 PracticHub · Gestión de Alumnos en Prácticas
+    </div>
+  </div>
+</div>

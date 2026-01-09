@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AdminShell } from '../../shared/components/admin-shell/admin-shell';
 
 @Component({
   selector: 'app-dashboard-pages',
   standalone: true,  
-  imports: [RouterModule],  
+  imports: [CommonModule, AdminShell],  
   templateUrl: './dashboard-pages.html',
   styleUrl: './dashboard-pages.css',
 })

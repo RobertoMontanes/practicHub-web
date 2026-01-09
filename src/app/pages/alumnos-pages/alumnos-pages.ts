@@ -1,23 +1,118 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AlumnoService } from '../../services/alumno-service';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AdminShell } from '../../shared/components/admin-shell/admin-shell';
+import { ModalShared } from '../../shared/components/modal-shared/modal-shared';
+import { ApiClient } from '../../services/api-client.service';
+import { PaginatedResponse, User } from '../../services/api.types';
 
 @Component({
   selector: 'app-alumnos-pages',
   standalone: true,  
-  imports: [RouterModule], 
+  imports: [CommonModule, ReactiveFormsModule, AdminShell, ModalShared], 
   templateUrl: './alumnos-pages.html',
   styleUrl: './alumnos-pages.css',
 })
 export class AlumnosPages implements OnInit {
-  
-  alumnos: any = null;
+  private api = inject(ApiClient);
 
-  constructor (private service: AlumnoService) {}
+  alumnos: User[] = [];
+  loading = false;
+  saving = false;
+  modalOpen = false;
+  errorMessage = '';
+
+  page = 1;
+  perPage = 10;
+  lastPage = 1;
+  total = 0;
+
+  form = new FormGroup({
+    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    password: new FormControl<string>('', { nonNullable: true }),
+  });
+
+  editingId: number | null = null;
 
   ngOnInit(): void {
-    this.service.getAlumnos().subscribe(r => {
-      this.alumnos = r
-    })
+    this.load();
+  }
+
+  load(page = 1): void {
+    this.loading = true;
+    this.page = page;
+    this.api.list<User>('users', { page: this.page, per_page: this.perPage }).subscribe({
+      next: (res: PaginatedResponse<User>) => {
+        this.alumnos = res.data;
+        this.lastPage = res.last_page;
+        this.total = res.total;
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMessage = 'No se pudieron cargar los alumnos.';
+        this.loading = false;
+      },
+    });
+  }
+
+  openCreate(): void {
+    this.editingId = null;
+    this.errorMessage = '';
+    this.form.reset({ name: '', email: '', password: '' });
+    this.modalOpen = true;
+  }
+
+  openEdit(user: User): void {
+    this.editingId = user.id;
+    this.errorMessage = '';
+    this.form.patchValue({ name: user.name, email: user.email, password: '' });
+    this.modalOpen = true;
+  }
+
+  closeModal(): void {
+    this.modalOpen = false;
+    this.saving = false;
+  }
+
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.saving = true;
+    const payload: Record<string, unknown> = { ...this.form.getRawValue() };
+
+    if (this.editingId && !payload['password']) {
+      delete payload['password'];
+    }
+
+    const request = this.editingId
+      ? this.api.update<User>('users', this.editingId, payload)
+      : this.api.create<User>('users', payload);
+
+    request.subscribe({
+      next: () => {
+        this.saving = false;
+        this.modalOpen = false;
+        this.load(this.page);
+      },
+      error: (err) => {
+        this.saving = false;
+        this.errorMessage = err?.error?.message || 'No se pudo guardar el alumno.';
+      },
+    });
+  }
+
+  remove(user: User): void {
+    if (!confirm(`Eliminar ${user.name}?`)) {
+      return;
+    }
+
+    this.api.delete('users', user.id).subscribe({
+      next: () => this.load(this.page),
+      error: () => (this.errorMessage = 'No se pudo eliminar el alumno.'),
+    });
   }
 }

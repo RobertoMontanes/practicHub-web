@@ -8,17 +8,18 @@ import { ProfesoresPages } from './pages/profesores-pages/profesores-pages';
 import { InformesPages } from './pages/informes-pages/informes-pages';
 import { PracticasPages } from './pages/practicas-pages/practicas-pages';
 import { ValoracionesPages } from './pages/valoraciones-pages/valoraciones-pages';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginPages },
   { path: 'registro', component: SingUpPages },
-  { path: 'dashboard', component: DashboardPages },
-  { path: 'empresas', component: EmpresasPages },
-  { path: 'alumnos', component: AlumnosPages },
-  { path: 'profesores', component: ProfesoresPages },
-  { path: 'informes', component: InformesPages },
-  { path: 'seguimiento-historico', component: PracticasPages },
-  { path: 'valoraciones', component: ValoracionesPages },
+  { path: 'dashboard', component: DashboardPages, canActivate: [authGuard] },
+  { path: 'empresas', component: EmpresasPages, canActivate: [authGuard] },
+  { path: 'alumnos', component: AlumnosPages, canActivate: [authGuard] },
+  { path: 'profesores', component: ProfesoresPages, canActivate: [authGuard] },
+  { path: 'informes', component: InformesPages, canActivate: [authGuard] },
+  { path: 'seguimiento-historico', component: PracticasPages, canActivate: [authGuard] },
+  { path: 'valoraciones', component: ValoracionesPages, canActivate: [authGuard] },
   { path: '**', redirectTo: '/login' },
 ];
