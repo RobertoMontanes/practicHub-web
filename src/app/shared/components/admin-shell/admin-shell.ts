@@ -21,11 +21,11 @@ export class AdminShell {
   private router = inject(Router);
 
   links: NavLink[] = [
-    { path: '/dashboard', label: 'Dashboard', description: 'Vista general del sistema' },
+    { path: '/dashboard', label: 'Panel de control', description: 'Vista general del sistema' },
     { path: '/empresas', label: 'Empresas', description: 'Gestión de empresas colaboradoras' },
     { path: '/profesores', label: 'Profesores', description: 'Gestión de profesores supervisores' },
     { path: '/alumnos', label: 'Alumnos', description: 'Gestión de estudiantes' },
-    { path: '/seguimiento-historico', label: 'Seguimiento Histórico', description: 'Seguimiento de prácticas' },
+    { path: '/seguimiento-historico', label: 'Seguimiento Histórico', description: 'Análisis histórico de empresas' },
     { path: '/valoraciones', label: 'Valoraciones', description: 'Sistema de evaluaciones' },
     { path: '/informes', label: 'Informes', description: 'Generación de reportes PDF/Excel' },
   ];

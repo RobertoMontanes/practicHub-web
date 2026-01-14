@@ -1,21 +1,62 @@
 .sidebar {
   width: 288px;
-  min-height: 100vh;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-  background: #ffffff;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #030213;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-title {
+  font-weight: 700;
+  font-size: 20px;
+  color: #0a0a0a;
+  line-height: 1.2;
+}
+
+.app-subtitle {
+  font-size: 14px;
+  color: #717182;
+}
+
+.menu {
+  flex-grow: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .menu-item {
   position: relative;
+  display: block;
   border-radius: 8px;
-  padding: 12px 12px 12px 16px;
+  padding: 12px 12px 12px 40px;
   cursor: pointer;
   transition: background 0.3s;
   color: #0a0a0a;
 }
 
 .menu-item:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .menu-item.active {
@@ -38,9 +79,24 @@
   color: #cfcfcf;
 }
 
+.login-btn {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  background: linear-gradient(90deg, #030213 0%, #130d79 100%);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  opacity: 0.92;
+}
+
 .footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 12px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px;
   font-size: 13px;
   color: #717182;
 }
