@@ -32,7 +32,7 @@
           <h5 class="mb-0">Listado de alumnos</h5>
           <small class="text-secondary">Datos sincronizados con la API</small>
         </div>
-        <button class="btn btn-outline-secondary btn-sm" (click)="load(page)" [disabled]="loading">
+        <button class="btn btn-outline-secondary btn-sm" (click)="load(page)" [disabled]="loading || saving">
           Actualizar
         </button>
       </div>
@@ -55,8 +55,12 @@
               <td>{{ alumno.email }}</td>
               <td>{{ alumno.created_at | date: 'short' }}</td>
               <td class="text-end">
-                <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(alumno)">Editar</button>
-                <button class="btn btn-sm btn-outline-danger" (click)="remove(alumno)">Eliminar</button>
+                <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(alumno)" [disabled]="saving">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="remove(alumno)" [disabled]="saving">
+                  Eliminar
+                </button>
               </td>
             </tr>
           </tbody>
@@ -64,6 +68,9 @@
       </div>
     </div>
 
+    <div class="alert alert-success" role="alert" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
     <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
@@ -71,7 +78,9 @@
     <app-modal-shared
       [open]="modalOpen"
       [title]="editingId ? 'Editar alumno' : 'Nuevo alumno'"
-      primaryLabel="Guardar"
+      [primaryLabel]="saving ? 'Guardando...' : 'Guardar'"
+      [primaryDisabled]="saving"
+      [secondaryDisabled]="saving"
       secondaryLabel="Cancelar"
       (primary)="submit()"
       (secondary)="closeModal()"

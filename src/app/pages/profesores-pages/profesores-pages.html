@@ -29,7 +29,9 @@
     <div class="card shadow-sm border-0">
       <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h6 class="m-0">Listado de Profesores</h6>
-        <button class="btn btn-dark btn-sm" (click)="openCreate()">Nuevo Profesor</button>
+        <button class="btn btn-dark btn-sm" (click)="openCreate()" [disabled]="saving">
+          Nuevo Profesor
+        </button>
       </div>
 
       <div class="table-responsive">
@@ -67,8 +69,12 @@
                 </span>
               </td>
               <td class="text-end">
-                <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(profesor)">Editar</button>
-                <button class="btn btn-sm btn-outline-danger" (click)="remove(profesor)">Eliminar</button>
+                <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(profesor)" [disabled]="saving">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-outline-danger" (click)="remove(profesor)" [disabled]="saving">
+                  Eliminar
+                </button>
               </td>
             </tr>
           </tbody>
@@ -76,6 +82,9 @@
       </div>
     </div>
 
+    <div class="alert alert-success mt-3" role="alert" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
     <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
@@ -83,7 +92,9 @@
     <app-modal-shared
       [open]="modalOpen"
       [title]="editingId ? 'Editar profesor' : 'Nuevo profesor'"
-      primaryLabel="Guardar"
+      [primaryLabel]="saving ? 'Guardando...' : 'Guardar'"
+      [primaryDisabled]="saving"
+      [secondaryDisabled]="saving"
       secondaryLabel="Cancelar"
       (primary)="submit()"
       (secondary)="closeModal()"

@@ -3,7 +3,7 @@
     <div class="container-fluid bg-light py-4">
       <div class="mb-4">
         <h2 class="fw-normal text-dark">Informes</h2>
-        <p class="text-secondary">Generación de reportes PDF/Excel</p>
+        <p class="text-secondary">Vista solo lectura: consulta de informes sin modificar</p>
       </div>
 
       <div class="row g-3">
@@ -48,7 +48,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0">Lista de Informes</h5>
-            <button class="btn btn-dark">Nuevo Informe</button>
+            <span class="text-secondary small">Solo lectura</span>
           </div>
 
           <div class="input-group mb-3">
@@ -58,9 +58,10 @@
             <input
               type="text"
               class="form-control bg-light border-0"
-              placeholder="Buscar por tipo de informe, fecha o usuario..."
+              placeholder="Búsqueda deshabilitada en modo lectura"
+              disabled
             />
-            <button class="btn btn-outline-secondary">Filtros</button>
+            <button class="btn btn-outline-secondary" disabled>Filtros</button>
           </div>
 
           <div class="table-responsive">

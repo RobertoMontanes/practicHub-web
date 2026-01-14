@@ -1,31 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminShell } from '../../shared/components/admin-shell/admin-shell';
 import { ModalShared } from '../../shared/components/modal-shared/modal-shared';
-import { ApiClient } from '../../services/api-client.service';
-import { Empresa, PaginatedResponse } from '../../services/api.types';
+import { EmpresasService } from '../../services/empresas.service';
+import { Empresa, EmpresaPayload, PaginatedResponse } from '../../services/api.types';
 
 @Component({
   selector: 'app-empresas-pages',
-  standalone: true,  
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, AdminShell, ModalShared],
   templateUrl: './empresas-pages.html',
   styleUrl: './empresas-pages.css',
 })
-export class EmpresasPages implements OnInit {
-  private api = inject(ApiClient);
+export class EmpresasPages implements OnInit, OnDestroy {
+  private empresasService = inject(EmpresasService);
 
   empresas: Empresa[] = [];
   loading = false;
   saving = false;
   modalOpen = false;
   errorMessage = '';
+  successMessage = '';
 
   page = 1;
   perPage = 10;
   lastPage = 1;
   total = 0;
+  private successTimeout: ReturnType<typeof setTimeout> | null = null;
 
   form = new FormGroup({
     nombre: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -45,28 +47,35 @@ export class EmpresasPages implements OnInit {
     this.load();
   }
 
+  ngOnDestroy(): void {
+    this.clearSuccessMessage();
+  }
+
   load(page = 1): void {
     this.loading = true;
     this.page = page;
-    this.api
-      .list<Empresa>('empresas', { page: this.page, per_page: this.perPage })
-      .subscribe({
-        next: (res: PaginatedResponse<Empresa>) => {
-          this.empresas = res.data;
-          this.lastPage = res.last_page;
-          this.total = res.total;
-          this.loading = false;
-        },
-        error: () => {
-          this.errorMessage = 'No se pudieron cargar las empresas.';
-          this.loading = false;
-        },
-      });
+    this.empresasService.list(this.page, this.perPage).subscribe({
+      next: (res: PaginatedResponse<Empresa>) => {
+        this.empresas = res.data;
+        this.page = res.current_page;
+        this.lastPage = res.last_page;
+        this.total = res.total;
+        this.loading = false;
+      },
+      error: () => {
+        this.errorMessage = 'No se pudieron cargar las empresas.';
+        this.loading = false;
+      },
+    });
   }
 
   openCreate(): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = null;
     this.errorMessage = '';
+    this.clearSuccessMessage();
     this.form.reset({
       nombre: '',
       cif: '',
@@ -82,8 +91,12 @@ export class EmpresasPages implements OnInit {
   }
 
   openEdit(empresa: Empresa): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = empresa.id;
     this.errorMessage = '';
+    this.clearSuccessMessage();
     this.form.patchValue({
       nombre: empresa.nombre,
       cif: empresa.cif,
@@ -104,6 +117,10 @@ export class EmpresasPages implements OnInit {
   }
 
   submit(): void {
+    if (this.saving) {
+      return; // Prevent double submit while a request is in flight
+    }
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -111,17 +128,25 @@ export class EmpresasPages implements OnInit {
 
     this.saving = true;
     this.errorMessage = '';
-    const payload = this.form.getRawValue();
+    this.clearSuccessMessage();
 
-    const request = this.editingId
-      ? this.api.update<Empresa>('empresas', this.editingId, payload)
-      : this.api.create<Empresa>('empresas', payload);
+    const payload = this.form.getRawValue() as EmpresaPayload;
+    const isEditing = !!this.editingId;
+    const request = isEditing
+      ? this.empresasService.update(this.editingId!, payload)
+      : this.empresasService.create(payload);
 
     request.subscribe({
       next: () => {
         this.saving = false;
         this.modalOpen = false;
-        this.load(this.page);
+        this.successMessage = isEditing
+          ? 'La empresa se actualizo correctamente.'
+          : 'La empresa se creo correctamente.';
+        this.startSuccessTimeout();
+        const nextPage = isEditing ? this.page : 1;
+        this.editingId = null;
+        this.load(nextPage);
       },
       error: (err) => {
         this.saving = false;
@@ -131,14 +156,32 @@ export class EmpresasPages implements OnInit {
   }
 
   remove(empresa: Empresa): void {
+    if (this.saving) {
+      return;
+    }
     if (!confirm(`Eliminar ${empresa.nombre}?`)) {
       return;
     }
 
-    this.api.delete('empresas', empresa.id).subscribe({
+    this.empresasService.delete(empresa.id).subscribe({
       next: () => this.load(this.page),
       error: () => (this.errorMessage = 'No se pudo eliminar la empresa.'),
     });
   }
 
+  private startSuccessTimeout(): void {
+    this.clearSuccessMessage();
+    this.successTimeout = setTimeout(() => {
+      this.successMessage = '';
+      this.successTimeout = null;
+    }, 3000);
+  }
+
+  private clearSuccessMessage(): void {
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+      this.successTimeout = null;
+    }
+    this.successMessage = '';
+  }
 }

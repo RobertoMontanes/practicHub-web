@@ -17,6 +17,8 @@ export class ModalShared {
   @Input() secondaryLabel = 'Cancelar';
   @Input() hideSecondary = false;
   @Input() disableBackdropClose = false;
+  @Input() primaryDisabled = false;
+  @Input() secondaryDisabled = false;
 
   @Output() primary = new EventEmitter<void>();
   @Output() secondary = new EventEmitter<void>();

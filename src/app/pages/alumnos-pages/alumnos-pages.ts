@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminShell } from '../../shared/components/admin-shell/admin-shell';
 import { ModalShared } from '../../shared/components/modal-shared/modal-shared';
@@ -13,7 +13,7 @@ import { PaginatedResponse, User } from '../../services/api.types';
   templateUrl: './alumnos-pages.html',
   styleUrl: './alumnos-pages.css',
 })
-export class AlumnosPages implements OnInit {
+export class AlumnosPages implements OnInit, OnDestroy {
   private api = inject(ApiClient);
 
   alumnos: User[] = [];
@@ -21,6 +21,8 @@ export class AlumnosPages implements OnInit {
   saving = false;
   modalOpen = false;
   errorMessage = '';
+  successMessage = '';
+  private successTimeout: ReturnType<typeof setTimeout> | null = null;
 
   page = 1;
   perPage = 10;
@@ -37,6 +39,10 @@ export class AlumnosPages implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  ngOnDestroy(): void {
+    this.clearSuccessMessage();
   }
 
   load(page = 1): void {
@@ -57,15 +63,23 @@ export class AlumnosPages implements OnInit {
   }
 
   openCreate(): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = null;
     this.errorMessage = '';
+    this.successMessage = '';
     this.form.reset({ name: '', email: '', password: '' });
     this.modalOpen = true;
   }
 
   openEdit(user: User): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = user.id;
     this.errorMessage = '';
+    this.successMessage = '';
     this.form.patchValue({ name: user.name, email: user.email, password: '' });
     this.modalOpen = true;
   }
@@ -76,12 +90,17 @@ export class AlumnosPages implements OnInit {
   }
 
   submit(): void {
+    if (this.saving) {
+      return;
+    }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     this.saving = true;
+    this.errorMessage = '';
+    this.successMessage = '';
     const payload: Record<string, unknown> = { ...this.form.getRawValue() };
 
     if (this.editingId && !payload['password']) {
@@ -96,7 +115,12 @@ export class AlumnosPages implements OnInit {
       next: () => {
         this.saving = false;
         this.modalOpen = false;
+        this.successMessage = this.editingId
+          ? 'El alumno se actualizó correctamente.'
+          : 'El alumno se creó correctamente.';
+        this.startSuccessTimeout();
         this.load(this.page);
+        this.editingId = null;
       },
       error: (err) => {
         this.saving = false;
@@ -106,6 +130,9 @@ export class AlumnosPages implements OnInit {
   }
 
   remove(user: User): void {
+    if (this.saving) {
+      return;
+    }
     if (!confirm(`Eliminar ${user.name}?`)) {
       return;
     }
@@ -114,5 +141,21 @@ export class AlumnosPages implements OnInit {
       next: () => this.load(this.page),
       error: () => (this.errorMessage = 'No se pudo eliminar el alumno.'),
     });
+  }
+
+  private startSuccessTimeout(): void {
+    this.clearSuccessMessage();
+    this.successTimeout = setTimeout(() => {
+      this.successMessage = '';
+      this.successTimeout = null;
+    }, 3000);
+  }
+
+  private clearSuccessMessage(): void {
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+      this.successTimeout = null;
+    }
+    this.successMessage = '';
   }
 }

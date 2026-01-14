@@ -96,6 +96,10 @@
       </div>
     </div>
 
+    <div class="alert alert-success mt-3" role="alert" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
     <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
       {{ errorMessage }}
     </div>
@@ -103,11 +107,13 @@
     <app-modal-shared
       [open]="modalOpen"
       [title]="editingId ? 'Editar empresa' : 'Nueva empresa'"
-      primaryLabel="Guardar"
+      [primaryLabel]="saving ? 'Guardando...' : 'Guardar'"
+      [primaryDisabled]="saving"
+      [secondaryDisabled]="saving"
       secondaryLabel="Cancelar"
+      [disableBackdropClose]="true"
       (primary)="submit()"
       (secondary)="closeModal()"
-      (backdrop)="closeModal()"
     >
       <form [formGroup]="form" class="row g-3">
         <div class="col-md-6">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminShell } from '../../shared/components/admin-shell/admin-shell';
 import { ModalShared } from '../../shared/components/modal-shared/modal-shared';
@@ -13,7 +13,7 @@ import { PaginatedResponse, Profesor, User } from '../../services/api.types';
   templateUrl: './profesores-pages.html',
   styleUrl: './profesores-pages.css',
 })
-export class ProfesoresPages implements OnInit {
+export class ProfesoresPages implements OnInit, OnDestroy {
   private api = inject(ApiClient);
 
   profesores: Profesor[] = [];
@@ -22,6 +22,8 @@ export class ProfesoresPages implements OnInit {
   saving = false;
   modalOpen = false;
   errorMessage = '';
+  successMessage = '';
+  private successTimeout: ReturnType<typeof setTimeout> | null = null;
 
   page = 1;
   perPage = 10;
@@ -42,6 +44,10 @@ export class ProfesoresPages implements OnInit {
   ngOnInit(): void {
     this.load();
     this.loadUsers();
+  }
+
+  ngOnDestroy(): void {
+    this.clearSuccessMessage();
   }
 
   load(page = 1): void {
@@ -71,8 +77,13 @@ export class ProfesoresPages implements OnInit {
   }
 
   openCreate(): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = null;
     this.errorMessage = '';
+    this.successMessage = '';
+    this.clearSuccessMessage();
     this.form.reset({
       user_id: null,
       dni: '',
@@ -85,8 +96,13 @@ export class ProfesoresPages implements OnInit {
   }
 
   openEdit(profesor: Profesor): void {
+    if (this.saving) {
+      return;
+    }
     this.editingId = profesor.id;
     this.errorMessage = '';
+    this.successMessage = '';
+    this.clearSuccessMessage();
     this.form.patchValue({
       user_id: profesor.user_id,
       dni: profesor.dni,
@@ -104,12 +120,17 @@ export class ProfesoresPages implements OnInit {
   }
 
   submit(): void {
+    if (this.saving) {
+      return;
+    }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
     this.saving = true;
+    this.errorMessage = '';
+    this.successMessage = '';
     const payload = this.form.getRawValue();
 
     const request = this.editingId
@@ -120,7 +141,12 @@ export class ProfesoresPages implements OnInit {
       next: () => {
         this.saving = false;
         this.modalOpen = false;
+        this.successMessage = this.editingId
+          ? 'El profesor se actualizó correctamente.'
+          : 'El profesor se creó correctamente.';
+        this.startSuccessTimeout();
         this.load(this.page);
+        this.editingId = null;
       },
       error: (err) => {
         this.saving = false;
@@ -130,6 +156,9 @@ export class ProfesoresPages implements OnInit {
   }
 
   remove(profesor: Profesor): void {
+    if (this.saving) {
+      return;
+    }
     if (!confirm(`Eliminar ${profesor.user?.name ?? 'profesor'}?`)) {
       return;
     }
@@ -138,5 +167,20 @@ export class ProfesoresPages implements OnInit {
       next: () => this.load(this.page),
       error: () => (this.errorMessage = 'No se pudo eliminar el profesor.'),
     });
+  }
+
+  private startSuccessTimeout(): void {
+    this.clearSuccessMessage();
+    this.successTimeout = setTimeout(() => {
+      this.successMessage = '';
+      this.successTimeout = null;
+    }, 3000);
+  }
+
+  private clearSuccessMessage(): void {
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+      this.successTimeout = null;
+    }
   }
 }

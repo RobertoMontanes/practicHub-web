@@ -34,6 +34,7 @@ export class PracticasPages implements OnInit {
   saving = false;
   modalOpen = false;
   errorMessage = '';
+  readonly = true; // Vista solo lectura para proteger el histórico
 
   page = 1;
   perPage = 10;
@@ -102,6 +103,9 @@ export class PracticasPages implements OnInit {
   }
 
   openCreate(): void {
+    if (this.readonly) {
+      return;
+    }
     this.editingId = null;
     this.errorMessage = '';
     this.form.reset({
@@ -122,6 +126,9 @@ export class PracticasPages implements OnInit {
   }
 
   openEdit(seguimiento: SeguimientoPractica): void {
+    if (this.readonly) {
+      return;
+    }
     this.editingId = seguimiento.id;
     this.errorMessage = '';
     this.form.patchValue({
@@ -147,6 +154,9 @@ export class PracticasPages implements OnInit {
   }
 
   submit(): void {
+    if (this.readonly) {
+      return;
+    }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -173,6 +183,9 @@ export class PracticasPages implements OnInit {
   }
 
   remove(seguimiento: SeguimientoPractica): void {
+    if (this.readonly) {
+      return;
+    }
     if (!confirm(`Eliminar seguimiento "${seguimiento.titulo}"?`)) {
       return;
     }

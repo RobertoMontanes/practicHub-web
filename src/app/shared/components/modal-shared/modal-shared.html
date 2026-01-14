@@ -22,12 +22,14 @@
 					<app-button-shared
 						variant="ghost"
 						label="{{ secondaryLabel }}"
+						[disabled]="secondaryDisabled"
 						(pressed)="onSecondary()"
 					></app-button-shared>
 				}
 				<app-button-shared
 					variant="primary"
 					label="{{ primaryLabel }}"
+					[disabled]="primaryDisabled"
 					(pressed)="onPrimary()"
 				></app-button-shared>
 			</div>

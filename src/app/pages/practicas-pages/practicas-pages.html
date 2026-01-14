@@ -3,9 +3,11 @@
     <div class="d-flex justify-content-between align-items-start mb-3">
       <div>
         <h2 class="fw-bold text-dark">Seguimiento de prácticas</h2>
-        <p class="text-secondary">Alta, edición y borrado de seguimientos</p>
+        <p class="text-secondary">Histórico en solo lectura para proteger las valoraciones</p>
       </div>
-      <button class="btn btn-dark" (click)="openCreate()">Nuevo seguimiento</button>
+      <button class="btn btn-dark" (click)="openCreate()" [disabled]="true" *ngIf="!readonly">
+        Nuevo seguimiento
+      </button>
     </div>
 
     <div class="card shadow-sm mb-3">
@@ -29,7 +31,7 @@
     <div class="card shadow-sm">
       <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h6 class="m-0">Listado de seguimientos</h6>
-        <button class="btn btn-dark btn-sm" (click)="openCreate()">Nuevo seguimiento</button>
+        <div class="text-secondary small">Vista solo lectura</div>
       </div>
       <div class="table-responsive">
         <table class="table align-middle mb-0">
@@ -41,7 +43,7 @@
               <th>Profesor</th>
               <th>Curso</th>
               <th>Fechas</th>
-              <th class="text-end">Acciones</th>
+              <th class="text-end" *ngIf="!readonly">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +63,7 @@
                 <div>{{ seguimiento.fecha_inicio }} → {{ seguimiento.fecha_fin }}</div>
                 <small class="text-secondary">{{ seguimiento.horas_totales }} h</small>
               </td>
-              <td class="text-end">
+              <td class="text-end" *ngIf="!readonly">
                 <button class="btn btn-sm btn-outline-secondary me-2" (click)="openEdit(seguimiento)">Editar</button>
                 <button class="btn btn-sm btn-outline-danger" (click)="remove(seguimiento)">Eliminar</button>
               </td>
@@ -74,9 +76,12 @@
     <div class="alert alert-danger mt-3" *ngIf="errorMessage">{{ errorMessage }}</div>
 
     <app-modal-shared
+      *ngIf="!readonly"
       [open]="modalOpen"
       [title]="editingId ? 'Editar seguimiento' : 'Nuevo seguimiento'"
-      primaryLabel="Guardar"
+      [primaryLabel]="saving ? 'Guardando...' : 'Guardar'"
+      [primaryDisabled]="saving"
+      [secondaryDisabled]="saving"
       secondaryLabel="Cancelar"
       (primary)="submit()"
       (secondary)="closeModal()"

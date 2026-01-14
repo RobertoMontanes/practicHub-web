@@ -30,6 +30,18 @@ export interface Empresa {
   updated_at?: string;
 }
 
+export interface EmpresaPayload {
+  nombre: string;
+  cif: string;
+  direccion: string;
+  telefono: string;
+  email: string;
+  sector: string;
+  tutor_empresa: string;
+  email_tutor: string;
+  activo: boolean;
+}
+
 export interface Profesor {
   id: number;
   user_id: number;
