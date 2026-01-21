@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5B8DEF"/>
+      <stop offset="100%" style="stop-color:#9B59B6"/>
+    </linearGradient>
+  </defs>
+  <!-- Círculo de fondo -->
+  <circle cx="100" cy="100" r="90" fill="url(#bgGradient)"/>
+  <!-- Nodo superior -->
+  <circle cx="100" cy="50" r="15" fill="white"/>
+  <!-- Nodo izquierdo -->
+  <circle cx="55" cy="110" r="12" fill="white"/>
+  <!-- Nodo derecho -->
+  <circle cx="145" cy="110" r="12" fill="white"/>
+  <!-- Nodo inferior -->
+  <circle cx="100" cy="160" r="12" fill="white"/>
+  <!-- Líneas de conexión -->
+  <line x1="100" y1="65" x2="67" y2="100" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <line x1="100" y1="65" x2="133" y2="100" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <line x1="67" y1="120" x2="100" y2="148" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <line x1="133" y1="120" x2="100" y2="148" stroke="white" stroke-width="6" stroke-linecap="round"/>
+</svg>
